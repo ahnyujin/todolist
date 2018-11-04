@@ -1,0 +1,99 @@
+<html>
+<head>
+  <title>TODO list</title>
+</head>
+<body>
+  제목<input type="text" id="title">
+  내용<input type="text" id="message">
+  마감기한<input type="date" id="limit">
+  <button onclick="createToDo()"> + </button>
+  <div id="todolist">
+
+  </div>
+  <script>
+    document.write("______________________________Completed Work_______________________________");
+  </script>
+  <div id="fintodo" style="color:blue">
+
+  </div>
+
+  <script>
+    function createToDo() {
+      var finto = document.createElement("div");
+      var todo = document.createElement("div");    // To-Do div
+      var span = document.createElement("span");    // To-Do Span
+      var span2 = document.createElement("span");    // To-Do Span
+      var upButton=document.createElement("button");
+      var downButton=document.createElement("button");
+      var replaceButton = document.createElement("button");    // To-Do replace button
+      var finishButton = document.createElement("button");    // To-Do finish button
+      var deleteButton = document.createElement("button");    // To-Do finish button
+      var input=new Array();
+      input[0] = document.getElementById("title").value;
+      input[1] = document.getElementById("message").value;
+      input[2] = document.getElementById("limit").value;
+      span.innerHTML = input;
+      todo.appendChild(span);
+      document.getElementById("todolist").appendChild(todo);
+
+      //up
+      upButton.onclick = function() {
+           [this.parentNode.firstChild.innerHTML,this.parentNode.previousSibling.firstChild.innerHTML]=[this.parentNode.previousSibling.firstChild.innerHTML,this.parentNode.firstChild.innerHTML];
+      }
+      upButton.textContent = "up";
+      todo.appendChild(upButton);
+
+      //down
+      downButton.onclick = function() {
+           [this.parentNode.firstChild.innerHTML,this.parentNode.nextSibling.firstChild.innerHTML]=[this.parentNode.nextSibling.firstChild.innerHTML,this.parentNode.firstChild.innerHTML];
+      }
+      downButton.textContent = "down";
+      todo.appendChild(downButton);
+
+      //내용 수정
+      replaceButton.onclick = function() {
+        var input=new Array();
+        input[0]=this.parentNode.firstChild.innerHTML[0];
+        input[1] = document.getElementById("message").value;
+        input[2]=this.parentNode.firstChild.innerHTML[2];
+        if (input[1] == "") {
+          alert("수정할 내용을 입력해주세요");
+          return;
+        }
+        this.parentNode.firstChild.innerHTML = input;
+        document.getElementById("title").value = "";
+        document.getElementById("message").value = "";
+        document.getElementById("limit").value = "";
+      }
+      replaceButton.textContent = "수정";
+      todo.appendChild(replaceButton);
+
+      //todo완료
+      finishButton.onclick = function() {
+        var retVal = confirm("완료하시겠습니까?");
+        if (retVal == true) {
+          var input=new Array();
+          input= this.parentNode.firstChild.innerHTML;
+          span2.innerHTML=input;
+          finto.appendChild(span2);
+          document.getElementById("fintodo").appendChild(finto);
+          this.parentNode.remove();
+        }
+      }
+      finishButton.textContent = "완료";
+      todo.appendChild(finishButton);
+
+      //삭제
+      deleteButton.onclick = function() {
+        var retVal = confirm("삭제하시겠습니까?");
+        if (retVal == true) {
+          this.parentNode.remove();
+        }
+      }
+      deleteButton.textContent = "삭제";
+      todo.appendChild(deleteButton);
+    }
+  </script>
+
+</body>
+</html>
